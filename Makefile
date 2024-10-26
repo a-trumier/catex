@@ -1,10 +1,11 @@
-.PHONY: all folders clean
+.PHONY: all folders clean testing
 
 # change if you have different compilers
 CC=gcc
 CFLAGS=-Wall -Wextra
 
 
+# normal build config.
 all: dynamic static
 	cp build/lib* include/
 
@@ -24,4 +25,18 @@ folders:
 	mkdir -p build/
 
 clean:
-	rm build/* include/lib*; rmdir build
+	rm build/* include/lib* testshared teststatic; rmdir build
+
+# testing config. remove before version 1
+
+testing: all testshared teststatic
+
+# remember to export LD_LIBRARY_PATH for this to work.
+testshared: test.o
+	$(CC) -o testshared -L./include -lcatex build/test.o
+
+teststatic: test.o
+	$(CC) -I./include -o teststatic build/test.o include/libcatex.a
+
+test.o: src/test.c
+	$(CC) $(CFLAGS) -c -o build/test.o src/test.c
