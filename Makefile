@@ -6,7 +6,7 @@ CFLAGS=-Wall -Wextra
 
 # normal build config.
 all: dynamic static
-	cp build/lib* include/
+	mv build/lib* include/
 
 dynamic: folders fpiccatex.o
 	$(CC) --shared -o build/libcatex.so build/fpiccatex.o
