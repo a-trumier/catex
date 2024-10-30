@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+int _cxRequireBuffer(catex* cx); // make the compiler happy
+
 catex* cxInit(char* file_path, char* compiler)
 {
     if (strlen(file_path) > (MAX_CHAR_BUF_SIZE / 4))
@@ -105,7 +107,20 @@ int cxChangeDoctype(catex* cx, char* new_doctype)
 }
 
 // TODO: Implement
-int cxAddBody(catex* cx, char* text);
+int cxAddBody(catex* cx, char* text)
+{
+    int textlen = strlen(text);
+    
+    if (textlen + cx->cur_char >= MAX_CHAR_BUF_SIZE) // equal to for null char
+    {
+        _cxRequireBuffer(cx); // increment buffer then move on
+    }
+    strcpy(cx->body[cx->cur_buf] + (cx->cur_char), text);
+    
+    cx->cur_char += textlen;
+    
+    return 0;
+}
 
 // TODO: Implement
 int cxAddBodyPlaintext(catex* cx, char* text);
@@ -133,11 +148,11 @@ int _cxRequireBuffer(catex* cx)
     // super careful with memory allocation. I don't want to just ask the OS
     // for a gig for no reason.
     
+    printf("cur_buf: %d\n", cx->cur_buf);
     cx->cur_buf++;
     if (cx->cur_buf >= MAX_NUM_BUFS)
     {
         // Fie on you all! Hit the ejection switch!
-        cxFree(cx);
         return 1;
     }
     cx->cur_char = 0;

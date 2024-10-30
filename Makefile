@@ -33,10 +33,10 @@ testing: all testshared teststatic
 
 # remember to export LD_LIBRARY_PATH for this to work.
 testshared: test.o
-	$(CC) -o testshared -L./include -lcatex build/test.o
+	$(CC) -g -o testshared -L./include -lcatex build/test.o
 
 teststatic: test.o
-	$(CC) -I./include -o teststatic build/test.o include/libcatex.a
+	$(CC) -g -I./include -o teststatic build/test.o include/libcatex.a
 
 test.o: src/test.c
 	$(CC) $(CFLAGS) -c -o build/test.o src/test.c

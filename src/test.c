@@ -46,7 +46,28 @@ int main(int argc, char* argv[])
             perror("Error: cxInit did not generate the correct compiler.\n");
         counter++;
     }
- 
+
+    /* TESTING cxAddBody */
+
+    cxAddBody(cx, "I have added body text!");
+
+    if (strcmp(cx->body[cx->cur_buf], "I have added body text!") != 0)
+    {
+        if (should_print)
+            printf("Error: cxAddBody did not add body text.\nBody text: %s", 
+                    cx->body[cx->cur_buf]);
+        counter++;
+    }
+
+    /* This is a bad edge case. TODO: Fix cxAddBody for a case where the input
+     * string is larger than the MAX_CHAR_BUF_SIZE
+    char* lol = malloc(sizeof(char)*MAX_CHAR_BUF_SIZE+1);
+    for (int i = 0; i < MAX_CHAR_BUF_SIZE; i++)
+    {
+        lol[i] = 'a';
+    }
+    lol[MAX_CHAR_BUF_SIZE]
+    */
     cxFree(cx);
     printf("Test driver completed. Errors encountered: %d\n", counter);
     return 0;
