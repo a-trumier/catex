@@ -111,11 +111,24 @@ int cxAddBody(catex* cx, char* text)
 {
     int textlen = strlen(text);
     
-    if (textlen + cx->cur_char >= MAX_CHAR_BUF_SIZE) // equal to for null char
+    int i = cx->cur_char;
+    int j = 0;
+    char cur_char = text[0];
+    while (j < textlen && cur_char != '\0')
     {
-        _cxRequireBuffer(cx); // increment buffer then move on
+        printf("cur_buf: %d\n", cx->cur_buf);
+        cx->body[cx->cur_buf][i] = text[j];
+        cur_char = text[j];
+        printf("cur_char: %c\n", cur_char);
+
+        if (i + 1 >= MAX_CHAR_BUF_SIZE)
+        {
+            _cxRequireBuffer(cx);
+            i = 0;
+        }
+        j++;
+        i++;
     }
-    strcpy(cx->body[cx->cur_buf] + (cx->cur_char), text);
     
     cx->cur_char += textlen;
     
@@ -148,7 +161,6 @@ int _cxRequireBuffer(catex* cx)
     // super careful with memory allocation. I don't want to just ask the OS
     // for a gig for no reason.
     
-    printf("cur_buf: %d\n", cx->cur_buf);
     cx->cur_buf++;
     if (cx->cur_buf >= MAX_NUM_BUFS)
     {

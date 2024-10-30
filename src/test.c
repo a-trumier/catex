@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main(int argc, char* argv[])
 {
@@ -59,15 +60,42 @@ int main(int argc, char* argv[])
         counter++;
     }
 
-    /* This is a bad edge case. TODO: Fix cxAddBody for a case where the input
-     * string is larger than the MAX_CHAR_BUF_SIZE
-    char* lol = malloc(sizeof(char)*MAX_CHAR_BUF_SIZE+1);
-    for (int i = 0; i < MAX_CHAR_BUF_SIZE; i++)
+    char* lol = malloc(sizeof(char)*(MAX_CHAR_BUF_SIZE+4));
+    for (int i = 0; i < MAX_CHAR_BUF_SIZE+3; i++)
     {
         lol[i] = 'a';
     }
-    lol[MAX_CHAR_BUF_SIZE]
-    */
+    lol[MAX_CHAR_BUF_SIZE+3] = '\0';
+
+    cxAddBody(cx, lol);
+
+    for (int i = strlen("I have added body text!"); i < MAX_CHAR_BUF_SIZE; i++)
+    {
+        if (cx->body[0][i] != 'a')
+        {
+            if (should_print)
+                printf("Error: cxAddBody did not correctly add buffer.\n");
+            counter++;
+        }
+    }
+
+    // TODO: Figure out why this isn't passing? It should be fine, but for some
+    // reason the second buffer is just giving nonsense.
+    for (int i = 0; i < cx->cur_char; i++)
+    {
+        if (cx->body[1][i] != 'a')
+        {
+            if (should_print)
+            {
+                printf("Error: cxAddBody did not correctly add buffer.\n");
+                printf("Expected %c got %c\n", 'a', cx->body[1][i]);
+            }
+            counter++;
+            break;
+        }
+    }
+
+    free(lol);
     cxFree(cx);
     printf("Test driver completed. Errors encountered: %d\n", counter);
     return 0;
