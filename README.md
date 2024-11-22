@@ -18,18 +18,18 @@ A lightweight and straightforward C library for generating LaTeX documents. This
    ```
 This will generate a file output.tex that you can compile with pdflatex or similar tools.
 
-##Installation
+## Installation
 No installation is necessary—just copy the header file into your project.
 
-##Contributing
+## Contributing
 Contributions are welcome! Feel free to:
 
 1. Submit pull requests.
 2. Open issues for bugs or feature requests.
 3. Fork the project and make your own variations.
 
-##License
+## License
 This project is licensed under the GNU GPLv3 License. See the LICENSE file for details.
 
-Why Another LaTeX Library?
+## Why Another LaTeX Library?
 Many existing libraries are powerful but overly complex for small projects or learning purposes. This library focuses on simplicity and adaptability, empowering developers to tailor it to their needs or learn from its straightforward design.
