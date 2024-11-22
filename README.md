@@ -11,15 +11,15 @@ A lightweight and straightforward C library for generating LaTeX documents. This
 
 ## Getting Started
 
-1. Copy the header file (`simple_latex.h`) into your project directory.
+1. Follow the installation instructions below.
 2. Include the header in your C code:
    ```c
-   #include "catex.h
+   #include "catex.h"
    ```
-This will generate a file output.tex that you can compile with pdflatex or similar tools.
+3. Done! Use the library as you wish.
 
 ## Installation
-No installation is necessary—just copy the header file into your project.
+TODO: Installation steps
 
 ## Contributing
 Contributions are welcome! Feel free to:
