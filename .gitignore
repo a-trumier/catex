@@ -1,3 +1,5 @@
 build/
+include/libcatex.so
+include/libcatex.a
 testshared
 teststatic
