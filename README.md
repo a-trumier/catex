@@ -9,11 +9,6 @@ A lightweight and straightforward C library for generating LaTeX documents. This
 - **Customizable**: Designed for users to copy, rewrite, and adapt the library for their own use cases.
 - **Focus on Simplicity**: Ideal for those who value a clean and understandable codebase.
 
-## Requirements
-1. A C Compiler such as GCC or clang
-2. fpic
-3. ar
-
 ## Getting Started
 
 1. Follow the installation instructions below.
@@ -24,7 +19,39 @@ A lightweight and straightforward C library for generating LaTeX documents. This
 3. Done! Use the library as you wish.
 
 ## Installation
-TODO: Installation steps
+
+### Linux
+
+#### Requirements
+1. A compiler such as GCC or clang
+2. ar and fpic command
+
+#### Steps
+1. Clone to a directory of your choosing by using the following command:
+    ```console
+    git clone https://github.com/a-trumier/catex
+    ```
+2. Move into the directory 
+    ```console
+    cd catex
+    ```
+3. Use the make command followed by choosing a compiler. The default is gcc.
+If you would want a different compiler, just change the CC variable. For
+example, if you want to use clang, do the following command:
+    ```console
+    make CC="clang"
+    ```
+4. This will make both a .so file into include and a .a file. If you want only
+a dynamic or archive file, do the following:
+    ```console
+    make dynamic
+    ```
+    or
+    ```console
+    make static
+    ```
+
+5. Done! Now the library is ready to use.
 
 ## Contributing
 Contributions are welcome! Feel free to:
