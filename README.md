@@ -9,6 +9,11 @@ A lightweight and straightforward C library for generating LaTeX documents. This
 - **Customizable**: Designed for users to copy, rewrite, and adapt the library for their own use cases.
 - **Focus on Simplicity**: Ideal for those who value a clean and understandable codebase.
 
+## Requirements
+1. A C Compiler such as GCC or clang
+2. fpic
+3. ar
+
 ## Getting Started
 
 1. Follow the installation instructions below.

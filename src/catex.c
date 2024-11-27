@@ -8,77 +8,41 @@ int _cxRequireBuffer(catex* cx); // make the compiler happy
 
 catex* cxInit(char* file_path, char* compiler)
 {
-    if (strlen(file_path) > (MAX_CHAR_BUF_SIZE / 4))
+    int path_len = strlen(file_path);
+    if (path_len > (MAX_CHAR_BUF_SIZE / 4))
     {
         // This would be insanity. But make sure it doesn't happen
         return NULL;
     }
 
     catex* return_val = malloc(sizeof(catex));
+    
+    // This null check isn't below because this is required for the next calls
+    // and must not be null for the next steps to occur.
     if (return_val == NULL)
     {
         return NULL;
     }
 
-    // TODO: Make this not look horrible?
-    // It technically is memory safe but my god it is really bad.
-    
     // Allocate internals.
-    
     return_val->preamble = (char*) malloc(sizeof(char)*MAX_CHAR_BUF_SIZE);
-    if (return_val->preamble == NULL)
-    {
-        free(return_val); // Give back the few bytes we have.
-        return NULL;
-    }
-
     return_val->doctype = (char*) malloc(sizeof(char)*MAX_CHAR_BUF_SIZE);
-    if (return_val->doctype == NULL)
-    {
-        free(return_val->preamble);
-        free(return_val);
-        return NULL;
-    }
-
     return_val->body = (char**) malloc(sizeof(char*)*MAX_NUM_BUFS);
-    if (return_val->body == NULL)
-    {
-        free(return_val->preamble);
-        free(return_val->doctype);
-        free(return_val);
-        return NULL;
-    }
-
     return_val->body[0] = (char*) malloc(sizeof(char)*MAX_CHAR_BUF_SIZE);
-    if (return_val->body[0] == NULL)
-    {
-        free(return_val->preamble);
-        free(return_val->doctype);
-        free(return_val->body);
-        free(return_val);
-        return NULL;
-    }
-
     return_val->name =  (char*) malloc(sizeof(char)*(MAX_CHAR_BUF_SIZE / 4));
-    // dividing by 2 in this case because name is just the filepath. If there
-    // is a filepath longer than 200 chars we have a bigger issue than this.
-  
-    strcpy(return_val->name, file_path); // copy the file path over
-    strcpy(return_val->doctype, "article"); 
-
-    if (return_val->name == NULL)
-    {
-        free(return_val->preamble);
-        free(return_val->doctype);
-        free(return_val->body);
-        free(return_val->body[0]);
-        free(return_val);
-        return NULL;
-    }
-
+    // dividing by 4 in this case because name is just the filepath. If there
+    // is a filepath longer than that we have a bigger issue than this.
+    
     return_val->compiler = (char*) malloc(sizeof(char)*(MAX_CHAR_BUF_SIZE/40));
-    if (return_val->compiler == NULL)
+
+    // Since above is the last malloc call, we can check if ANY of the mallocs
+    // have failed. If so, free everything then return null
+    if (return_val->preamble == NULL || return_val->doctype == NULL || 
+            return_val->body == NULL || return_val->compiler == NULL ||
+            return_val->body[0] == NULL || return_val->name == NULL || 
+            return_val->compiler == NULL)
     {
+        free(return_val->compiler);
         free(return_val->preamble);
         free(return_val->doctype);
         free(return_val->body);
@@ -88,10 +52,10 @@ catex* cxInit(char* file_path, char* compiler)
         return NULL;
     }
 
+    strcpy(return_val->name, file_path);
+    strcpy(return_val->doctype, "article"); 
     strcpy(return_val->compiler, compiler);
 
-    // These tell us what buffer we are looking at and what character buffer
-    // we are doing.
     return_val->cur_buf = 0;
     return_val->cur_char = 0;
     
@@ -106,15 +70,14 @@ int cxChangeDoctype(catex* cx, char* new_doctype)
     return 0;
 }
 
-// TODO: Implement
-int cxAddBody(catex* cx, char* text)
+int cxAddBodyPlaintext(catex* cx, char* text)
 {
     int textlen = strlen(text);
     
     int i = cx->cur_char;
     int j = 0;
     char cur_char = text[0];
-    while (j < textlen && cur_char != '\0')
+    while (cur_char != '\0')
     {
         printf("cur_buf: %d\n", cx->cur_buf);
         cx->body[cx->cur_buf][i] = text[j];
@@ -135,8 +98,6 @@ int cxAddBody(catex* cx, char* text)
     return 0;
 }
 
-// TODO: Implement
-int cxAddBodyPlaintext(catex* cx, char* text);
 
 // TODO: Implement
 int cxCreateTex(catex* cx);

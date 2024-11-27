@@ -7,10 +7,6 @@
  * have a return code in there somewhere.
  */
 
-/* WARNING: IF YOU TRY TO ADD TOO BIG OF A BODY TO A DOCUMENT, CATEX WILL FREE
- * ITSELF AS TO SAVE YOU FROM OVEREXPENDING MEMORY.
- */
-
 #define MAX_CHAR_BUF_SIZE 1000
 #define MAX_NUM_BUFS 50
 
@@ -79,6 +75,14 @@ int cxCompilePdf(catex* cx);
  */
 int cxAddBody(catex* cx, char* text);
 
+/* Frees a created catex object.
+ *
+ * *cx: catex object to free.
+ *
+ * Returns: 0 if sucessful, 1 if not.
+ */
+int cxFree(catex* cx);
+
 // NOTE: The following functions are for experts with Latex to use. They do not
 // error check syntax for tex, nor do they care about what you put in them.
 // Please use them if you are handy with latex.
@@ -91,13 +95,5 @@ int cxAddBody(catex* cx, char* text);
  * Return: 0 if adding the text worked, 1 if not.
  */
 int cxAddBodyPlaintext(catex* cx, char* text);
-
-/* Frees a created catex object.
- *
- * *cx: catex object to free.
- *
- * Returns: 0 if sucessful, 1 if not.
- */
-int cxFree(catex* cx);
 
 #endif

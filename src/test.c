@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 
     /* TESTING cxAddBody */
 
-    cxAddBody(cx, "I have added body text!");
+    cxAddBodyPlaintext(cx, "I have added body text!");
 
     if (strcmp(cx->body[cx->cur_buf], "I have added body text!") != 0)
     {
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     }
     lol[MAX_CHAR_BUF_SIZE+3] = '\0';
 
-    cxAddBody(cx, lol);
+    cxAddBodyPlaintext(cx, lol);
 
     for (int i = strlen("I have added body text!"); i < MAX_CHAR_BUF_SIZE; i++)
     {
