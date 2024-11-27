@@ -60,6 +60,9 @@ Contributions are welcome! Feel free to:
 2. Open issues for bugs or feature requests.
 3. Fork the project and make your own variations.
 
+Note: The project is set up to ignore anything in the directory test/. Feel
+free to update information there.
+
 ## License
 This project is licensed under the GNU GPLv3 License. See the LICENSE file for details.
 

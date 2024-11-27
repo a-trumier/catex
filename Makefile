@@ -25,18 +25,3 @@ folders:
 
 clean:
 	rm -rf build/* include/lib* testshared teststatic build;
-
-# testing config. remove before version 1
-
-testing: all testshared teststatic
-	ln -sf build/tests* .
-
-# remember to export LD_LIBRARY_PATH for this to work.
-testshared: test.o
-	$(CC) -g -o build/testshared -L./include -lcatex build/test.o
-
-teststatic: test.o
-	$(CC) -g -I./include -o build/teststatic build/test.o include/libcatex.a
-
-test.o: src/test.c
-	$(CC) $(CFLAGS) -c -o build/test.o src/test.c
