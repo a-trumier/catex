@@ -29,26 +29,26 @@ A lightweight and straightforward C library for generating LaTeX documents. This
 #### Steps
 1. Clone to a directory of your choosing by using the following command:
     ```console
-    git clone https://github.com/a-trumier/catex
+    $ git clone https://github.com/a-trumier/catex
     ```
 2. Move into the directory 
     ```console
-    cd catex
+    $ cd catex
     ```
 3. Use the make command followed by choosing a compiler. The default is gcc.
 If you would want a different compiler, just change the CC variable. For
 example, if you want to use clang, do the following command:
     ```console
-    make CC="clang"
+    $ make CC="clang"
     ```
 4. This will make both a .so file into include and a .a file. If you want only
 a dynamic or archive file, do the following:
     ```console
-    make dynamic
+    $ make dynamic
     ```
     or
     ```console
-    make static
+    $ make static
     ```
 
 5. Done! Now the library is ready to use.
